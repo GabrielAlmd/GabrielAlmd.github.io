@@ -1,0 +1,140 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const challenges = await getCollection('challenges', ({ data }) => !data.draft);
+
+  return challenges.map((challenge) => ({
+    params: { slug: challenge.id },
+    props: { challenge },
+  }));
+}
+
+interface Props {
+  challenge: CollectionEntry<'challenges'>;
+}
+
+const { challenge } = Astro.props;
+const { Content } = await render(challenge);
+const { title, description, date, technologies, topics, confidentiality } = challenge.data;
+const hasMermaidDiagram = challenge.body?.includes('```mermaid') ?? false;
+const confidentialityLabel =
+  confidentiality === 'anonymized-professional'
+    ? 'Professional experience · Anonymized'
+    : 'Public engineering case study';
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <header class="project-header container">
+      <a class="back-link" href="/challenges/">&larr; All challenges</a>
+      <p class="eyebrow">Engineering case study</p>
+      <h1>{title}</h1>
+      <p class="project-summary">{description}</p>
+      <dl class="project-facts">
+        <div>
+          <dt>Published</dt>
+          <dd><time datetime={date.toISOString()}>{date.getUTCFullYear()}</time></dd>
+        </div>
+        <div>
+          <dt>Source</dt>
+          <dd>{confidentialityLabel}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="section">
+      <div class="container project-layout">
+        <div class="project-content prose">
+          <Content />
+        </div>
+
+        <aside class="project-sidebar" aria-label="Case study details">
+          <p class="confidentiality-label">{confidentialityLabel}</p>
+          <h2>Technologies</h2>
+          <ul class="tag-list">
+            {technologies.map((technology) => <li>{technology}</li>)}
+          </ul>
+          {
+            topics.length > 0 && (
+              <>
+                <h2>Topics</h2>
+                <ul class="tag-list">
+                  {topics.map((topic) => <li>{topic}</li>)}
+                </ul>
+              </>
+            )
+          }
+        </aside>
+      </div>
+    </div>
+  </article>
+  {
+    hasMermaidDiagram && (
+      <script>
+        import mermaid from 'mermaid';
+
+        const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: 'strict',
+          theme: 'base',
+          themeVariables: isDarkMode
+            ? {
+                background: '#1c2027',
+                primaryColor: '#1c2027',
+                primaryBorderColor: '#ff6a00',
+                primaryTextColor: '#f3f4f6',
+                secondaryColor: '#16191f',
+                secondaryBorderColor: '#ff6a00',
+                tertiaryColor: '#0f1115',
+                tertiaryBorderColor: '#9ca3af',
+                lineColor: '#9ca3af',
+                textColor: '#f3f4f6',
+              }
+            : {
+                background: '#fffdf9',
+                primaryColor: '#fffdf9',
+                primaryBorderColor: '#b84300',
+                primaryTextColor: '#202329',
+                secondaryColor: '#ebe7df',
+                secondaryBorderColor: '#b84300',
+                tertiaryColor: '#f4f1eb',
+                tertiaryBorderColor: '#5d6470',
+                lineColor: '#5d6470',
+                textColor: '#202329',
+              },
+        });
+
+        async function renderMermaidDiagrams() {
+          const sourceBlocks = document.querySelectorAll('pre[data-language="mermaid"] > code');
+
+          for (const [index, sourceBlock] of sourceBlocks.entries()) {
+            const source = sourceBlock.textContent?.trim();
+            const codeBlock = sourceBlock.closest('pre');
+
+            if (!source || !codeBlock) continue;
+
+            try {
+              const { svg, bindFunctions } = await mermaid.render(`mermaid-diagram-${index}`, source);
+              const diagram = document.createElement('div');
+
+              diagram.className = 'mermaid-diagram';
+              diagram.setAttribute('role', 'img');
+              diagram.setAttribute('aria-label', 'Engineering flow diagram');
+              diagram.innerHTML = svg;
+              codeBlock.replaceWith(diagram);
+              bindFunctions?.(diagram);
+            } catch (error) {
+              console.warn('Unable to render a Mermaid diagram.', error);
+            }
+          }
+        }
+
+        void renderMermaidDiagrams();
+      </script>
+    )
+  }
+</BaseLayout>

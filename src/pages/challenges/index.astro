@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+import ChallengeCard from '../../components/ChallengeCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const challenges = (await getCollection('challenges', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<BaseLayout
+  title="Engineering Challenges"
+  description="Anonymized engineering case studies about embedded Linux, software debugging, concurrency, networking, reliability, and performance analysis."
+>
+  <header class="page-intro container">
+    <p class="eyebrow">02 / Engineering challenges</p>
+    <h1>Real problems, carefully generalized</h1>
+    <p>
+      Concise case studies from professional embedded systems work. Identifying
+      details are removed, while the investigation methods and engineering lessons
+      remain concrete.
+    </p>
+  </header>
+
+  <section class="section section--challenges" aria-labelledby="challenge-list-heading">
+    <div class="container">
+      <div class="section-heading">
+        <h2 id="challenge-list-heading">All engineering challenges</h2>
+        <p class="category-summary">Professional experience · Anonymized</p>
+      </div>
+      {
+        challenges.length > 0 ? (
+          <div class="challenge-grid">
+            {challenges.map((challenge) => <ChallengeCard challenge={challenge} />)}
+          </div>
+        ) : (
+          <p class="empty-state">No published engineering challenges yet.</p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

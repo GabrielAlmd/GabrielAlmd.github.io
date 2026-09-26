@@ -1,10 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
+import ChallengeCard from '../components/ChallengeCard.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const featuredProjects = (await getCollection(
   'projects',
+  ({ data }) => data.featured && !data.draft,
+)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featuredChallenges = (await getCollection(
+  'challenges',
   ({ data }) => data.featured && !data.draft,
 )).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
@@ -46,9 +52,33 @@ const featuredProjects = (await getCollection(
     </div>
   </section>
 
+  <section class="section section--challenges" aria-labelledby="challenges-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">02 / Engineering challenges</p>
+          <h2 id="challenges-heading">Engineering challenges</h2>
+        </div>
+        <a href="/challenges/">View all challenges</a>
+      </div>
+      <p class="section-intro">
+        Some of the most valuable engineering work never becomes a public repository.
+        These anonymized case studies cover real investigations in embedded Linux,
+        networking, concurrency, reliability, and performance.
+      </p>
+      {
+        featuredChallenges.length > 0 && (
+          <div class="challenge-grid">
+            {featuredChallenges.map((challenge) => <ChallengeCard challenge={challenge} />)}
+          </div>
+        )
+      }
+    </div>
+  </section>
+
   <section class="section" aria-labelledby="interests-heading">
     <div class="container">
-      <p class="eyebrow">02 / Areas of work</p>
+      <p class="eyebrow">03 / Areas of work</p>
       <h2 id="interests-heading">Engineering interests</h2>
       <div class="interest-grid">
         <article>
@@ -70,7 +100,7 @@ const featuredProjects = (await getCollection(
   <section class="section" aria-labelledby="contact-heading">
     <div class="container split-grid">
       <div>
-        <p class="eyebrow">03 / Open knowledge</p>
+        <p class="eyebrow">04 / Open knowledge</p>
         <h2 id="contact-heading">Follow the work</h2>
       </div>
       <div>
@@ -80,6 +110,7 @@ const featuredProjects = (await getCollection(
         </p>
         <ul class="link-list">
           <li><a href="https://github.com/GabrielAlmd" rel="me">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/gabrielalmd/">LinkedIn</a></li>
           <li><a href="/about/">About this space</a></li>
         </ul>
       </div>
