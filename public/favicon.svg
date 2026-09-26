@@ -1,5 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Gabriel Almeida</title>
-  <rect width="64" height="64" rx="8" fill="#075f78"/>
-  <path d="M41.5 28.5v21H35v-4.2c-2.6 3.4-6.1 5.2-10.3 5.2-8.3 0-14.2-6.5-14.2-15.6 0-9.3 6.3-15.8 15.4-15.8 5.2 0 9.5 2.1 12.4 5.7l-4.7 4.1a9.4 9.4 0 0 0-7.5-3.5c-5.3 0-8.9 3.9-8.9 9.5 0 5.5 3.5 9.4 8.7 9.4 4.4 0 7.7-2.7 8.6-6.8h-9.1v-6h16.1v-3z" fill="#fff"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <title>Gabriel Almeida</title>
+  <rect width="1024" height="1024" rx="128" fill="#0b0f12"/>
+  <g transform="translate(-129 -65)">
+    <path fill="#f5f5f5" d="M395 324H773L652 444H429L344 529V670L383 710H549L622 639H420L521 541H718L791 632L589 830H340L225 710V492Z"/>
+    <path fill="#ff6500" d="M806 400 1058 722V830H984L713 487Z"/>
+  </g>
 </svg>
