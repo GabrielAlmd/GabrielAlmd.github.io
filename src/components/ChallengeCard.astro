@@ -1,0 +1,31 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+  challenge: CollectionEntry<'challenges'>;
+}
+
+const { challenge } = Astro.props;
+const { title, description, technologies, confidentiality } = challenge.data;
+const confidentialityLabel =
+  confidentiality === 'anonymized-professional'
+    ? 'Professional experience · Anonymized'
+    : 'Public engineering case study';
+---
+
+<article class="challenge-card">
+  <p class="challenge-card-type">Engineering case study</p>
+  <h3><a href={`/challenges/${challenge.id}/`}>{title}</a></h3>
+  <p class="challenge-description">{description}</p>
+  <p class="confidentiality-label">{confidentialityLabel}</p>
+  {
+    technologies.length > 0 && (
+      <ul class="tag-list" aria-label={`Technologies used in ${title}`}>
+        {technologies.slice(0, 5).map((technology) => <li>{technology}</li>)}
+      </ul>
+    )
+  }
+  <a class="project-card-link" href={`/challenges/${challenge.id}/`}>
+    Read case study <span aria-hidden="true">→</span>
+  </a>
+</article>

@@ -22,4 +22,21 @@ const projects = defineCollection({
   }),
 });
 
-export const collections = { projects };
+const challenges = defineCollection({
+  loader: glob({
+    base: './src/content/challenges',
+    pattern: '**/*.{md,mdx}',
+  }),
+  schema: z.object({
+    title: z.string().min(1),
+    description: z.string().min(1),
+    date: z.coerce.date(),
+    featured: z.boolean().default(false),
+    technologies: z.array(z.string()).default([]),
+    topics: z.array(z.string()).default([]),
+    confidentiality: z.enum(['public', 'anonymized-professional']),
+    draft: z.boolean().default(false),
+  }),
+});
+
+export const collections = { projects, challenges };

@@ -3,8 +3,9 @@
 Personal engineering portfolio for Gabriel Almeida, published at
 [gabrielalmd.github.io](https://gabrielalmd.github.io).
 
-The site is a small, static foundation for project case studies and notes about
-embedded software, systems programming, and engineering tooling.
+The site is a small, static foundation for project case studies, anonymized
+professional engineering challenges, and notes about embedded software, systems
+programming, and engineering tooling.
 
 ## Stack
 
@@ -37,17 +38,21 @@ npm run preview  # Preview the production build locally
 ├── public/               # Static assets
 ├── src/
 │   ├── components/       # Shared Astro components
-│   ├── content/projects/ # Markdown or MDX project entries
+│   ├── content/          # Project and engineering challenge entries
 │   ├── layouts/          # Shared document and SEO layout
 │   ├── pages/            # File-based routes
 │   └── styles/           # Global styles and design tokens
 ├── astro.config.mjs
-└── src/content.config.ts # Validated project schema
+└── src/content.config.ts # Validated content collection schemas
 ```
 
 Add a `.md` or `.mdx` file to `src/content/projects/` to create a project. The
 collection schema validates its frontmatter, and `src/pages/projects/[slug].astro`
 generates the matching detail route.
+
+Anonymized professional case studies live in `src/content/challenges/` and use the
+separate `challenges` collection. Draft entries are excluded from generated list
+and detail pages.
 
 ## Deployment
 
