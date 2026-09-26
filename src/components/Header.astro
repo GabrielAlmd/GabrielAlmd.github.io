@@ -13,7 +13,10 @@ const isCurrent = (href: string) =>
 
 <header class="site-header">
   <nav class="site-nav container" aria-label="Primary navigation">
-    <a class="site-name" href="/">Gabriel Almeida</a>
+    <a class="site-brand" href="/" aria-label="Gabriel Almeida, home">
+      <span class="site-name">Gabriel Almeida</span>
+      <span class="site-discipline">Engineering / Making</span>
+    </a>
 
     <ul class="nav-links">
       {
@@ -26,7 +29,9 @@ const isCurrent = (href: string) =>
         ))
       }
       <li>
-        <a href="https://github.com/GabrielAlmd" rel="me">GitHub</a>
+        <a class="external-link" href="https://github.com/GabrielAlmd" rel="me">
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
       </li>
     </ul>
   </nav>
