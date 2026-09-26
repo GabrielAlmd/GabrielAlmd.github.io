@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../components/ProjectCard.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const featuredProjects = (await getCollection(
+  'projects',
+  ({ data }) => data.featured && !data.draft,
+)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+---
+
+<BaseLayout>
+  <section class="hero container" aria-labelledby="hero-title">
+    <p class="eyebrow">Embedded Software Engineer</p>
+    <h1 id="hero-title">Gabriel Almeida</h1>
+    <p class="hero-summary">
+      I build and debug dependable software close to the hardware, with a focus on
+      embedded Linux, C/C++, networking, and practical engineering tools.
+    </p>
+  </section>
+
+  <section class="section">
+    <div class="container split-grid">
+      <div>
+        <p class="eyebrow">Introduction</p>
+        <h2>Software for real systems</h2>
+      </div>
+      <p>
+        My work sits between software and hardware: understanding constraints,
+        tracing failures, and creating maintainable systems and automation.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="featured-heading">
+    <div class="container">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">Selected work</p>
+          <h2 id="featured-heading">Featured projects</h2>
+        </div>
+        <a href="/projects/">View all projects</a>
+      </div>
+      <div class="project-grid">
+        {featuredProjects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="interests-heading">
+    <div class="container">
+      <p class="eyebrow">Areas of work</p>
+      <h2 id="interests-heading">Engineering interests</h2>
+      <div class="interest-grid">
+        <article>
+          <h3>Embedded systems</h3>
+          <p>Embedded Linux, C/C++, electronics, and systems programming.</p>
+        </article>
+        <article>
+          <h3>Reliability</h3>
+          <p>Debugging, observability, networking, and careful fault analysis.</p>
+        </article>
+        <article>
+          <h3>Engineering tools</h3>
+          <p>Automation, repeatable workflows, prototyping, and 3D printing.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="contact-heading">
+    <div class="container split-grid">
+      <div>
+        <p class="eyebrow">Contact</p>
+        <h2 id="contact-heading">Find me online</h2>
+      </div>
+      <ul class="link-list">
+        <li><a href="https://github.com/GabrielAlmd" rel="me">GitHub</a></li>
+        <li><a href="/about/">About</a></li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>
