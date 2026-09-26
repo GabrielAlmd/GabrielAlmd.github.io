@@ -10,46 +10,45 @@ const featuredProjects = (await getCollection(
 ---
 
 <BaseLayout>
-  <section class="hero container" aria-labelledby="hero-title">
-    <p class="eyebrow">Embedded Software Engineer</p>
-    <h1 id="hero-title">Gabriel Almeida</h1>
-    <p class="hero-summary">
-      I build and debug dependable software close to the hardware, with a focus on
-      embedded Linux, C/C++, networking, and practical engineering tools.
-    </p>
-  </section>
-
-  <section class="section">
-    <div class="container split-grid">
-      <div>
-        <p class="eyebrow">Introduction</p>
-        <h2>Software for real systems</h2>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-inner container">
+      <p class="eyebrow">Embedded Software Engineer / Maker</p>
+      <h1 id="hero-title">Gabriel Almeida</h1>
+      <p class="brand-statement">Build. Solve. Share.</p>
+      <p class="hero-summary">
+        Things I build, problems I solve, and what I learn along the way—across
+        embedded software, systems, electronics, and practical engineering tools.
+      </p>
+      <div class="hero-actions" aria-label="Primary links">
+        <a class="button button--primary" href="/projects/">Explore projects</a>
+        <a class="button button--secondary" href="https://github.com/GabrielAlmd" rel="me">
+          GitHub <span aria-hidden="true">↗</span>
+        </a>
       </div>
-      <p>
-        My work sits between software and hardware: understanding constraints,
-        tracing failures, and creating maintainable systems and automation.
+      <p class="process-line" aria-label="Working process">
+        <span>Idea</span><span aria-hidden="true">→</span><span>Iteration</span><span aria-hidden="true">→</span><span>Result</span>
       </p>
     </div>
   </section>
 
-  <section class="section" aria-labelledby="featured-heading">
+  <section class="section section--projects" aria-labelledby="featured-heading">
     <div class="container">
       <div class="section-heading">
         <div>
-          <p class="eyebrow">Selected work</p>
+          <p class="eyebrow">01 / Projects</p>
           <h2 id="featured-heading">Featured projects</h2>
         </div>
         <a href="/projects/">View all projects</a>
       </div>
       <div class="project-grid">
-        {featuredProjects.map((project) => <ProjectCard project={project} />)}
+        {featuredProjects.map((project, index) => <ProjectCard project={project} index={index} />)}
       </div>
     </div>
   </section>
 
   <section class="section" aria-labelledby="interests-heading">
     <div class="container">
-      <p class="eyebrow">Areas of work</p>
+      <p class="eyebrow">02 / Areas of work</p>
       <h2 id="interests-heading">Engineering interests</h2>
       <div class="interest-grid">
         <article>
@@ -71,13 +70,19 @@ const featuredProjects = (await getCollection(
   <section class="section" aria-labelledby="contact-heading">
     <div class="container split-grid">
       <div>
-        <p class="eyebrow">Contact</p>
-        <h2 id="contact-heading">Find me online</h2>
+        <p class="eyebrow">03 / Open knowledge</p>
+        <h2 id="contact-heading">Follow the work</h2>
       </div>
-      <ul class="link-list">
-        <li><a href="https://github.com/GabrielAlmd" rel="me">GitHub</a></li>
-        <li><a href="/about/">About</a></li>
-      </ul>
+      <div>
+        <p>
+          The goal is practical documentation: work that can be understood, reused,
+          challenged, and improved.
+        </p>
+        <ul class="link-list">
+          <li><a href="https://github.com/GabrielAlmd" rel="me">GitHub</a></li>
+          <li><a href="/about/">About this space</a></li>
+        </ul>
+      </div>
     </div>
   </section>
 </BaseLayout>

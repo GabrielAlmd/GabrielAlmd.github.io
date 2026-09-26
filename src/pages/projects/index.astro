@@ -15,7 +15,7 @@ const categories = [...new Set(projects.map(({ data }) => data.category))].sort(
   description="Engineering projects by Gabriel Almeida across embedded software, systems, and tooling."
 >
   <header class="page-intro container">
-    <p class="eyebrow">Projects</p>
+    <p class="eyebrow">01 / Projects</p>
     <h1>Engineering notes and case studies</h1>
     <p>
       Selected work covering the problem, constraints, design decisions,
@@ -36,7 +36,7 @@ const categories = [...new Set(projects.map(({ data }) => data.category))].sort(
         }
       </div>
       <div class="project-grid">
-        {projects.map((project) => <ProjectCard project={project} />)}
+        {projects.map((project, index) => <ProjectCard project={project} index={index} />)}
       </div>
     </div>
   </section>

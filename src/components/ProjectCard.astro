@@ -3,24 +3,27 @@ import type { CollectionEntry } from 'astro:content';
 
 interface Props {
   project: CollectionEntry<'projects'>;
+  index?: number;
 }
 
-const { project } = Astro.props;
+const { project, index = 0 } = Astro.props;
 const { title, description, date, status, technologies, category } = project.data;
 const statusLabel = status.replace('-', ' ');
+const projectNumber = String(index + 1).padStart(3, '0');
 ---
 
 <article class="project-card">
   <div class="project-card-meta">
-    <span>{category}</span>
+    <span class="project-card-index">Project / {projectNumber}</span>
     <time datetime={date.toISOString()}>
-      {date.toLocaleDateString('en', { year: 'numeric', month: 'short' })}
+      {date.getUTCFullYear()}
     </time>
   </div>
+  <p class="project-category">{category}</p>
   <h2><a href={`/projects/${project.id}/`}>{title}</a></h2>
-  <p>{description}</p>
+  <p class="project-description">{description}</p>
   <div class="project-card-footer">
-    <span class="status">{statusLabel}</span>
+    <span class="status"><span aria-hidden="true"></span>{statusLabel}</span>
     {
       technologies.length > 0 && (
         <ul class="tag-list" aria-label={`Technologies used in ${title}`}>
@@ -29,4 +32,7 @@ const statusLabel = status.replace('-', ' ');
       )
     }
   </div>
+  <a class="project-card-link" href={`/projects/${project.id}/`}>
+    Read case study <span aria-hidden="true">→</span>
+  </a>
 </article>
