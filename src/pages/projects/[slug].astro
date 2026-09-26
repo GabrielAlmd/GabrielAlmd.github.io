@@ -1,0 +1,78 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects', ({ data }) => !data.draft);
+
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const {
+  title,
+  description,
+  date,
+  status,
+  technologies,
+  category,
+  repositoryUrl,
+  externalUrl,
+  image,
+} = project.data;
+---
+
+<BaseLayout title={title} description={description} image={image}>
+  <article>
+    <header class="project-header container">
+      <a class="back-link" href="/projects/">&larr; All projects</a>
+      <p class="eyebrow">{category}</p>
+      <h1>{title}</h1>
+      <p class="project-summary">{description}</p>
+      <dl class="project-facts">
+        <div>
+          <dt>Date</dt>
+          <dd><time datetime={date.toISOString()}>{date.toLocaleDateString('en')}</time></dd>
+        </div>
+        <div>
+          <dt>Status</dt>
+          <dd>{status.replace('-', ' ')}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <div class="section">
+      <div class="container project-layout">
+        <div class="project-content prose">
+          <Content />
+        </div>
+
+        <aside class="project-sidebar" aria-label="Project details">
+          <h2>Technologies</h2>
+          <ul class="tag-list">
+            {technologies.map((technology) => <li>{technology}</li>)}
+          </ul>
+          {
+            (repositoryUrl || externalUrl) && (
+              <>
+                <h2>Links</h2>
+                <ul>
+                  {repositoryUrl && <li><a href={repositoryUrl}>Repository</a></li>}
+                  {externalUrl && <li><a href={externalUrl}>Live project</a></li>}
+                </ul>
+              </>
+            )
+          }
+        </aside>
+      </div>
+    </div>
+  </article>
+</BaseLayout>

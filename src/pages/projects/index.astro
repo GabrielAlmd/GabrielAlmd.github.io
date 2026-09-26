@@ -1,0 +1,43 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../../components/ProjectCard.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+
+const categories = [...new Set(projects.map(({ data }) => data.category))].sort();
+---
+
+<BaseLayout
+  title="Projects"
+  description="Engineering projects by Gabriel Almeida across embedded software, systems, and tooling."
+>
+  <header class="page-intro container">
+    <p class="eyebrow">Projects</p>
+    <h1>Engineering notes and case studies</h1>
+    <p>
+      Selected work covering the problem, constraints, design decisions,
+      implementation, and practical results.
+    </p>
+  </header>
+
+  <section class="section" aria-labelledby="project-list-heading">
+    <div class="container">
+      <div class="section-heading">
+        <h2 id="project-list-heading">All projects</h2>
+        {
+          categories.length > 0 && (
+            <p class="category-summary">
+              Categories: {categories.join(', ')}
+            </p>
+          )
+        }
+      </div>
+      <div class="project-grid">
+        {projects.map((project) => <ProjectCard project={project} />)}
+      </div>
+    </div>
+  </section>
+</BaseLayout>

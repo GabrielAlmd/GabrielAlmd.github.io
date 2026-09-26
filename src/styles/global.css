@@ -199,6 +199,133 @@ ul {
   color: var(--color-muted);
 }
 
+.project-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.project-card {
+  display: flex;
+  min-height: 18rem;
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  flex-direction: column;
+}
+
+.project-card h2 {
+  margin-block: var(--space-6) var(--space-3);
+}
+
+.project-card h2 a {
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.project-card h2 a:hover {
+  color: var(--color-accent);
+}
+
+.project-card p,
+.category-summary {
+  color: var(--color-muted);
+}
+
+.project-card-meta,
+.project-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.project-card-meta,
+.status {
+  color: var(--color-muted);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  text-transform: capitalize;
+}
+
+.project-card-footer {
+  align-items: flex-end;
+  margin-top: auto;
+}
+
+.category-summary {
+  font-size: var(--font-size-sm);
+}
+
+.project-header {
+  padding-block: var(--space-16);
+}
+
+.project-header h1 {
+  max-width: 18ch;
+  font-size: var(--font-size-hero);
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: var(--space-12);
+}
+
+.project-summary {
+  max-width: var(--text-width);
+  color: var(--color-muted);
+  font-size: var(--font-size-lg);
+}
+
+.project-facts {
+  display: flex;
+  gap: var(--space-8);
+  margin: var(--space-8) 0 0;
+}
+
+.project-facts div {
+  display: grid;
+  gap: var(--space-1);
+}
+
+.project-facts dt {
+  color: var(--color-muted);
+  font-size: var(--font-size-sm);
+}
+
+.project-facts dd {
+  margin: 0;
+  text-transform: capitalize;
+}
+
+.project-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(12rem, 1fr);
+  gap: var(--space-16);
+  align-items: start;
+}
+
+.project-content h2:not(:first-child) {
+  margin-top: var(--space-12);
+}
+
+.project-sidebar {
+  padding: var(--space-6);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+}
+
+.project-sidebar h2 {
+  margin-top: var(--space-8);
+  font-size: var(--font-size-base);
+}
+
+.project-sidebar h2:first-child {
+  margin-top: 0;
+}
+
+.project-sidebar > ul:last-child {
+  margin-bottom: 0;
+}
+
 .tag-list,
 .link-list {
   display: flex;
@@ -261,7 +388,9 @@ ul {
   }
 
   .split-grid,
-  .interest-grid {
+  .interest-grid,
+  .project-grid,
+  .project-layout {
     grid-template-columns: 1fr;
   }
 

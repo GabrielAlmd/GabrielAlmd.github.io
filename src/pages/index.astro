@@ -1,5 +1,12 @@
 ---
+import { getCollection } from 'astro:content';
+import ProjectCard from '../components/ProjectCard.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+
+const featuredProjects = (await getCollection(
+  'projects',
+  ({ data }) => data.featured && !data.draft,
+)).sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
 <BaseLayout>
@@ -34,11 +41,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </div>
         <a href="/projects/">View all projects</a>
       </div>
-      <p class="prose">
-        Project case studies will document the problem, engineering decisions,
-        implementation, and results. The first project entry establishes that
-        structure.
-      </p>
+      <div class="project-grid">
+        {featuredProjects.map((project) => <ProjectCard project={project} />)}
+      </div>
     </div>
   </section>
 
