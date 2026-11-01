@@ -1,8 +1,8 @@
 ---
 title: Maker Tracker Studio
-description: A local application for managing 3D-printing inventory, models, print jobs, purchases, and production costs.
+description: Version 1 is now available — a local application for managing 3D-printing inventory, models, print jobs, purchases, and production costs.
 date: 2026-10-18
-status: in-progress
+status: maintained
 featured: true
 technologies:
   - Go
@@ -10,6 +10,8 @@ technologies:
   - TypeScript
   - SQLite
 category: Engineering Tooling
+repositoryUrl: https://github.com/GabrielAlmd/maker-track-studio
+externalUrl: https://github.com/GabrielAlmd/maker-track-studio/releases
 draft: false
 ---
 
@@ -23,7 +25,7 @@ Spreadsheets can capture individual values, but they do not naturally connect a 
 
 Maker Tracker Studio began as a tool for my own workshop. It needs to be quick to install, straightforward to use, and useful without requiring a hosted database or external service.
 
-The application is intended to support the complete path from buying a spool to recording a finished print:
+The application supports the complete path from buying a spool to recording a finished print:
 
 - register filament and purchases;
 - maintain model information;
@@ -57,7 +59,7 @@ Development started with the Go API and the core data model, then added the Reac
 
 The API is responsible for validating operations and coordinating persistence. The frontend turns those operations into focused workflows so the user can add information without needing to understand the underlying relationships.
 
-The project is also being prepared for Linux and Windows builds. Keeping the database embedded in the application makes those packages easier to distribute and operate.
+Cross-platform packaging is part of the delivery workflow. Keeping the database embedded in the application makes packages easier to distribute and operate.
 
 ## Challenges
 
@@ -69,15 +71,15 @@ Packaging introduces another constraint: the application should remain easy to i
 
 ## Solution
 
-The application is being built around explicit domain records and a small local-first stack. Responsibilities are separated between the Go API, the React interface, and SQLite persistence, which keeps the system understandable and testable as features are added.
+The application is built around explicit domain records and a small local-first stack. Responsibilities are separated between the Go API, the React interface, and SQLite persistence, which keeps the system understandable and testable as features are added.
 
 Development is iterative: establish the data relationships, expose a narrow API, validate the workflow through the interface, and then extend it. Automated checks, security reviews, and screenshot-based interface validation support that process.
 
 ## Results
 
-After roughly four months of development, the project has progressed from an initial personal prototype into a structured beta application. It has also served as a practical exercise in full-stack architecture, data modelling, cross-platform delivery, and using AI-assisted workflows while retaining validation and review steps.
+After roughly four months of development, the project has progressed from an initial personal prototype to its first public release. It has also served as a practical exercise in full-stack architecture, data modelling, cross-platform delivery, and using AI-assisted workflows while retaining validation and review steps.
 
-Maker Tracker Studio is still in progress. The next milestone is a public open-source release with installation instructions and enough documentation for other makers to run it locally.
+Maker Tracker Studio version 1 is now available. The official repository provides the source code and documentation, while GitHub Releases provides the published versions.
 
 ## Technologies
 
@@ -85,4 +87,5 @@ Go, React, TypeScript, and SQLite.
 
 ## Availability
 
-The public repository and packaged releases are not available yet. Links will be added with the first open-source release.
+- [Official repository and documentation](https://github.com/GabrielAlmd/maker-track-studio)
+- [Download releases](https://github.com/GabrielAlmd/maker-track-studio/releases)
